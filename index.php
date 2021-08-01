@@ -8,9 +8,42 @@
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="bootstrap.min.js"></script>
 	<script type="text/javascript" src="popper.min.js"></script>
-	<script>
-		
-	</script>
+	<style type="text/css">
+		#modal
+		{
+		background-color: rgba(0,0,0,0.7);
+		height: 100%;
+		width: 100%;
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		display: none;
+		}
+		#modal-form
+		{
+		background-color: white;
+		width: 30%;
+		height: auto;
+		margin-left: 30%;
+		margin-top: 100px;
+		border-radius: 8px;
+		padding: 10px;
+		position: absolute;
+		}
+		#close-btn
+		{
+		background-color: red;
+		color: white;
+		width: 30px;
+		height: 30px;
+		position: absolute;
+		top: -15px;
+		right: -15px;
+		text-align: center;
+		border-radius: 8px;
+		cursor: pointer;
+		}
+	</style>
 </head>
 <body>
 <div class="container">
@@ -48,6 +81,10 @@
 		</div>
 	</div>
 </div>
+
+
+
+
 <script type="text/javascript" src="jquery.js"></script>
 <script>
 	$(document).ready(function(){
@@ -58,7 +95,7 @@
 				type:'GET',
 				success:function(res)
 				{
-					// console.log(data.data.length);
+					// console.log(res.data.length);
 					var html="<tr><td>ID</td><td>Name</td><td>Email</td><td>Gender</td></tr>";
 						var i;
 						for(i=0;i<res.data.length;i++)
@@ -68,6 +105,7 @@
 							"<td>"+res.data[i].name+"</td>"+
 							"<td>"+res.data[i].email+"</td>"+
 							"<td>"+res.data[i].gender+"</td>"+
+							"<td><button class='btn btn-info' id='edit' data-eid='"+res.data[i].id+"'>Edit</button></td>"+
 							"</tr>";
 						}
 						$("#display").html(html);
@@ -90,17 +128,17 @@
 			});
 			var qua=qualification;
 
-			var file = $('#pic')[0].files[0]
-			var pic=file.name;
+			// var file = $('#pic')[0].files[0]
+			// var pic=file.name;
 
 			// var obj={name:name,email:email,password:password,mobile:mobile,qualification:qua,pic:pic};
-			var obj={name:name,email:email,password:password,mobile:mobile,pic:pic};
+			var obj={name:name,email:email,password:password,mobile:mobile,qualification:qualification};
 
 			var jdata=JSON.stringify(obj);
 			$.ajax({
 				url : 'http://localhost/practice/php/api/insert.php',
 				type: 'POST',
-				data: obj,
+				data: jdata,
 				success:function(res)
 				{
 					// alert("Insert Success");
@@ -110,6 +148,10 @@
 
 			
 		});
+
+
+
+
 	});
 
 
